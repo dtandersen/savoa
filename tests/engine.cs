@@ -1,50 +1,167 @@
+using System;
 using System.Collections.Generic;
 
-class Engine
+namespace Savoa
 {
-    EntityManager em = new DefaultEntityManager();
-
-    public void add(Entity e)
+    public class Engine
     {
-        em.add(e);
+        private EntityManager entityManager;
+        private SystemManager systemManager;
+        private Logger logger;
+
+        // public Logger Logger
+        // {
+        //     get => logger;
+        //     set
+        //     {
+        //         logger = value;
+        //     }
+        // }
+
+        public Engine(Logger logger)
+        {
+            this.logger = logger;
+            entityManager = new DefaultEntityManager();
+            systemManager = new DefaultSystemManager(logger);
+        }
+
+        public void AddEntity(Entity entity)
+        {
+            entityManager.AddEntity(entity);
+        }
+
+        public void RemoveEntity(Entity entity)
+        {
+            entityManager.RemoveEntity(entity);
+        }
+
+        public bool ContainsEntity(Entity entity)
+        {
+            return entityManager.ContainsEntity(entity);
+        }
+
+        public void AddSystem(System system)
+        {
+            systemManager.AddSystem(system);
+            system.AddedToEngine(this);
+        }
+
+        public List<Entity> Entities()
+        {
+            return entityManager.Entities();
+        }
+
+        public void Process()
+        {
+            logger.WriteLine("Running engine");
+            systemManager.Process();
+        }
+
+        public EntityBag EntitiesFor(params Type[] componentTypes)
+        {
+            return new EntityBag(this, componentTypes);
+        }
     }
 
-    public void remove(Entity e)
+    interface SystemManager
     {
-        em.remove(e);
+        void Process();
+        void AddSystem(System system);
     }
 
-    public bool hasEntity(Entity e)
+    interface EntityManager
     {
-        return em.hasEntity(e);
-    }
-}
+        void AddEntity(Entity entity);
 
-interface EntityManager
-{
-    void add(Entity e);
+        void RemoveEntity(Entity entity);
 
-    void remove(Entity e);
+        bool ContainsEntity(Entity entity);
 
-    bool hasEntity(Entity e);
-}
-
-class DefaultEntityManager : EntityManager
-{
-    List<Entity> entities = new List<Entity>();
-
-    public void add(Entity e)
-    {
-        entities.Add(e);
+        List<Entity> Entities();
     }
 
-    public void remove(Entity e)
+    class DefaultEntityManager : EntityManager
     {
-        entities.Remove(e);
+        private List<Entity> entities = new List<Entity>();
+
+        public void AddEntity(Entity entity)
+        {
+            entities.Add(entity);
+        }
+
+        public void RemoveEntity(Entity entity)
+        {
+            entities.Remove(entity);
+        }
+
+        public bool ContainsEntity(Entity entity)
+        {
+            return entities.Contains(entity);
+        }
+
+        public List<Entity> Entities()
+        {
+            return entities;
+        }
     }
 
-    public bool hasEntity(Entity e)
+    class DefaultSystemManager : SystemManager
     {
-        return entities.Contains(e);
+        private List<System> systems = new List<System>();
+        Logger Logger;
+
+        public DefaultSystemManager(Logger logger)
+        {
+            Logger = logger;
+        }
+
+        public void Process()
+        {
+            foreach (System system in systems)
+            {
+                Logger.WriteLine("Processing system " + system);
+                system.Process();
+            }
+        }
+
+        public void AddSystem(System system)
+        {
+            systems.Add(system);
+        }
+    }
+
+    public class EntityBag
+    {
+        Engine engine;
+        Type[] componentTypes;
+
+        public EntityBag(Engine engine, Type[] componentTypes)
+        {
+            this.engine = engine;
+            this.componentTypes = componentTypes;
+        }
+
+        public List<Entity> GetEntities()
+        {
+            List<Entity> filtered = new List<Entity>();
+            foreach (Entity entity in engine.Entities())
+            {
+                bool mismatch = false;
+                foreach (Type t in componentTypes)
+                {
+                    if (!entity.HasComponent(t))
+                    {
+                        mismatch = true;
+                        break;
+                    }
+                }
+
+                if (mismatch) { continue; }
+
+                filtered.Add(entity);
+            }
+
+            return filtered;
+        }
     }
 }
