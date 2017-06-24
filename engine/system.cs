@@ -6,7 +6,7 @@ namespace Savoa
         void AddedToEngine(Engine engine);
     }
 
-    abstract class EntitySystem : System
+    public abstract class EntitySystem : System
     {
         protected Engine engine;
         protected EntityBag entities;
@@ -20,7 +20,7 @@ namespace Savoa
         }
     }
 
-    abstract class IteratingEntitySystem : EntitySystem
+    public abstract class IteratingEntitySystem : EntitySystem
     {
 
         // abstract public void processEntity(Entity entity);

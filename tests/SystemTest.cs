@@ -12,7 +12,6 @@ namespace Savoa
         public SystemTest(ITestOutputHelper outputHelper)
         {
             this.outputHelper = outputHelper;
-            // outputHelper.WriteLine("asasasas");
         }
 
         [Fact]

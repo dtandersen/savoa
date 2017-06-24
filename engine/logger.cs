@@ -5,7 +5,7 @@ namespace Savoa
         void WriteLine(string message);
     }
 
-    class NullLogger : Logger
+    public class NullLogger : Logger
     {
         public void WriteLine(string message)
         {
