@@ -85,7 +85,7 @@ namespace Savoa
 
         override public void AddedToEngine(Engine engine)
         {
-            entities = engine.EntitiesFor(typeof(Component1));
+            entities = engine.EntitiesFor(new Family(typeof(Component1)), typeof(Component1));
         }
     }
 
@@ -98,7 +98,7 @@ namespace Savoa
 
         override public void AddedToEngine(Engine engine)
         {
-            entities = engine.EntitiesFor(typeof(Component2));
+            entities = engine.EntitiesFor(new Family(typeof(Component2)), typeof(Component2));
         }
     }
 
@@ -112,7 +112,7 @@ namespace Savoa
 
         override public void AddedToEngine(Engine engine)
         {
-            entities = engine.EntitiesFor(typeof(Component1), typeof(Component2));
+            entities = engine.EntitiesFor(new Family(typeof(Component1), typeof(Component2)), typeof(Component1), typeof(Component2));
         }
     }
 

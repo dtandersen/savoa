@@ -7,11 +7,13 @@ namespace Savoa
     {
         private EntityManager entityManager;
         private SystemManager systemManager;
+        private FamilyManager familyManager;
 
         public Engine()
         {
             entityManager = new DefaultEntityManager();
             systemManager = new DefaultSystemManager();
+            familyManager = new DefaultFamilyManager(new EntityBag(entityManager.Entities()));
         }
 
         public void AddEntity(Entity entity)
@@ -42,12 +44,13 @@ namespace Savoa
 
         public void Process()
         {
+            familyManager.Process();
             systemManager.Process();
         }
 
-        public EntityBag EntitiesFor(params Type[] componentTypes)
+        public EntityBag EntitiesFor(Family family, params Type[] componentTypes)
         {
-            return new EntityBag(this, componentTypes);
+            return familyManager.EntitiesFor(family);
         }
     }
 }

@@ -5,36 +5,21 @@ namespace Savoa
 {
     public class EntityBag
     {
-        private Engine engine;
-        private Type[] componentTypes;
+        private List<Entity> entities;
 
-        public EntityBag(Engine engine, Type[] componentTypes)
+        public EntityBag(List<Entity> entities)
         {
-            this.engine = engine;
-            this.componentTypes = componentTypes;
+            this.entities = entities;
         }
 
         public List<Entity> GetEntities()
         {
-            List<Entity> filtered = new List<Entity>();
-            foreach (Entity entity in engine.Entities())
-            {
-                bool mismatch = false;
-                foreach (Type t in componentTypes)
-                {
-                    if (!entity.HasComponent(t))
-                    {
-                        mismatch = true;
-                        break;
-                    }
-                }
+            return entities;
+        }
 
-                if (mismatch) { continue; }
-
-                filtered.Add(entity);
-            }
-
-            return filtered;
+        internal void SetEntities(List<Entity> entities)
+        {
+            this.entities = entities;
         }
     }
 }
