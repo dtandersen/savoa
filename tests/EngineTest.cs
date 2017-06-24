@@ -3,12 +3,12 @@ using Xunit;
 
 namespace Savoa
 {
-    public class UnitTest1
+    public class EngineTest
     {
         [Fact]
-        public void Test1()
+        public void AddEntityToEngine()
         {
-            Engine engine = new Engine(new NullLogger());
+            Engine engine = new Engine();
             Entity entity1 = new Entity();
             engine.AddEntity(entity1);
             Assert.True(engine.ContainsEntity(entity1));

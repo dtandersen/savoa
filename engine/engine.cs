@@ -7,22 +7,11 @@ namespace Savoa
     {
         private EntityManager entityManager;
         private SystemManager systemManager;
-        private Logger logger;
 
-        // public Logger Logger
-        // {
-        //     get => logger;
-        //     set
-        //     {
-        //         logger = value;
-        //     }
-        // }
-
-        public Engine(Logger logger)
+        public Engine()
         {
-            this.logger = logger;
             entityManager = new DefaultEntityManager();
-            systemManager = new DefaultSystemManager(logger);
+            systemManager = new DefaultSystemManager();
         }
 
         public void AddEntity(Entity entity)
@@ -53,7 +42,6 @@ namespace Savoa
 
         public void Process()
         {
-            logger.WriteLine("Running engine");
             systemManager.Process();
         }
 
@@ -108,18 +96,15 @@ namespace Savoa
     class DefaultSystemManager : SystemManager
     {
         private List<System> systems = new List<System>();
-        Logger Logger;
 
-        public DefaultSystemManager(Logger logger)
+        public DefaultSystemManager()
         {
-            Logger = logger;
         }
 
         public void Process()
         {
             foreach (System system in systems)
             {
-                Logger.WriteLine("Processing system " + system);
                 system.Process();
             }
         }

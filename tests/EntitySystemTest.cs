@@ -15,9 +15,9 @@ namespace Savoa
         }
 
         [Fact]
-        public void Test1()
+        public void ProcessSystem()
         {
-            Engine engine = new Engine(new XunitLogger(outputHelper));
+            Engine engine = new Engine();
             EntitySystem es = new IteratingEntitySystem12();
             engine.AddSystem(es);
 
@@ -40,9 +40,9 @@ namespace Savoa
         }
 
         [Fact]
-        public void Test2()
+        public void ProcessTwoSystems()
         {
-            Engine engine = new Engine(new XunitLogger(outputHelper));
+            Engine engine = new Engine();
             engine.AddSystem(new IteratingEntitySystem1());
             engine.AddSystem(new IteratingEntitySystem2());
 
@@ -65,9 +65,9 @@ namespace Savoa
         }
 
         [Fact]
-        public void Test3()
+        public void FilterEntitiesBeforeProcessing()
         {
-            Engine engine = new Engine(new XunitLogger(outputHelper));
+            Engine engine = new Engine();
             engine.AddSystem(new IteratingEntitySystem1());
             engine.AddSystem(new IteratingEntitySystem2());
 
