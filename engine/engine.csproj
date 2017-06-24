@@ -43,8 +43,13 @@
   <ItemGroup>
     <Compile Include="Engine.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="EntityBag.cs" />
+    <Compile Include="EntityManager.cs" />
+    <Compile Include="EntitySystem.cs" />
+    <Compile Include="IteratingEntitySystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System.cs" />
+    <Compile Include="SystemManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

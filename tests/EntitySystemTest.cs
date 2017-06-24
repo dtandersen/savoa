@@ -1,19 +1,9 @@
-using System;
-using System.IO;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Savoa
 {
     public class SystemTest
     {
-        ITestOutputHelper outputHelper;
-
-        public SystemTest(ITestOutputHelper outputHelper)
-        {
-            this.outputHelper = outputHelper;
-        }
-
         [Fact]
         public void ProcessSystem()
         {
