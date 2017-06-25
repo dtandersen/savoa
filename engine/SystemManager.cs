@@ -4,7 +4,8 @@ namespace Savoa
 {
     interface SystemManager
     {
-        void Process();
+        IEnumerable<System> Systems { get; }
+
         void AddSystem(System system);
     }
 
@@ -12,16 +13,10 @@ namespace Savoa
     {
         private List<System> systems = new List<System>();
 
+        public IEnumerable<System> Systems => systems;
+
         public DefaultSystemManager()
         {
-        }
-
-        public void Process()
-        {
-            foreach (System system in systems)
-            {
-                system.Process();
-            }
         }
 
         public void AddSystem(System system)

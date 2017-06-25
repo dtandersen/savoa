@@ -40,7 +40,7 @@ namespace Savoa
 
             familyMembers.Clear();
 
-            foreach (Entity entity in entities)
+            foreach (Entity entity in this.entities)
             {
                 if (!family.Matches(entity))
                 {
@@ -50,24 +50,22 @@ namespace Savoa
                 familyMembers.Add(entity);
             }
 
-            ReadOnlyCollection<Entity> bag = familyReferences[family];
+            ReadOnlyCollection<Entity> entities = familyReferences[family];
 
-            return bag;
+            return entities;
         }
 
         public void OnEntityAdded(Entity entity)
         {
             UpdateFamilies(entity);
-            entity.ComponentAdded += OnComponentAdded;
-            entity.ComponentRemoved += OnComponentRemoved;
         }
 
-        private void OnComponentRemoved(Entity entity)
+        internal void OnEntityRemoved(Entity entity)
         {
-            UpdateFamilies(entity);
+            RemoveFamilyMember(entity);
         }
 
-        private void OnComponentAdded(Entity entity)
+        public void OnEntityModified(Entity entity)
         {
             UpdateFamilies(entity);
         }
@@ -83,8 +81,26 @@ namespace Savoa
                 if (family.Matches(entity))
                 {
                     List<Entity> familyMembers = families[family];
-                    familyMembers.Add(entity);
+                    if (!familyMembers.Contains(entity))
+                    {
+                        familyMembers.Add(entity);
+                    }
                 }
+                else
+                {
+                    List<Entity> familyMembers = families[family];
+                    familyMembers.Remove(entity);
+                }
+            }
+        }
+
+        private void RemoveFamilyMember(Entity entity)
+        {
+            foreach (KeyValuePair<Family, List<Entity>> entry in families)
+            {
+                Family family = entry.Key;
+                List<Entity> familyMembers = this.families[family];
+                familyMembers.Remove(entity);
             }
         }
     }

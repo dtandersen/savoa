@@ -8,15 +8,24 @@ namespace Savoa
     {
         private DefaultEntityManager entityManager;
         private SystemManager systemManager;
-        private FamilyManager familyManager;
+        private DefaultFamilyManager familyManager;
+        private ComponentManager componentManager;
 
         public Engine()
         {
             entityManager = new DefaultEntityManager();
             systemManager = new DefaultSystemManager();
             familyManager = new DefaultFamilyManager(new ReadOnlyCollection<Entity>(entityManager.Entities()));
+            componentManager = new ComponentManager();
 
-            entityManager.EntityAdded += familyManager.OnEntityAdded;
+            entityManager.EntityAdded += componentManager.OnEntityAdded;
+            entityManager.EntityRemoved += componentManager.OnEntityRemoved;
+
+            componentManager.EntityAdded += entityManager.OnEntityAdded;
+            componentManager.EntityAdded += familyManager.OnEntityAdded;
+            componentManager.EntityModified += familyManager.OnEntityModified;
+            componentManager.EntityRemoved += entityManager.OnEntityRemoved;
+            componentManager.EntityRemoved += familyManager.OnEntityRemoved;
         }
 
         public void AddEntity(Entity entity)
@@ -47,10 +56,17 @@ namespace Savoa
 
         public void Process()
         {
-            systemManager.Process();
+            componentManager.ApplyOperations();
+
+            foreach (System system in systemManager.Systems)
+            {
+                system.Process();
+
+                componentManager.ApplyOperations();
+            }
         }
 
-        public ReadOnlyCollection<Entity> EntitiesFor(Family family, params Type[] componentTypes)
+        public ReadOnlyCollection<Entity> EntitiesFor(Family family)
         {
             return familyManager.EntitiesFor(family);
         }

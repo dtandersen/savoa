@@ -39,5 +39,12 @@ namespace Savoa
 
             return false;
         }
+
+        public void RemoveComponent<T>()
+        {
+            T component = GetComponent<T>();
+            components.Remove(component);
+            ComponentRemoved?.Invoke(this);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Savoa
 {
@@ -20,6 +21,7 @@ namespace Savoa
         public delegate void AddEntityHandler(Entity entity);
 
         public event AddEntityHandler EntityAdded;
+        public event AddEntityHandler EntityRemoved;
 
         public DefaultEntityManager()
         {
@@ -27,12 +29,20 @@ namespace Savoa
 
         public void AddEntity(Entity entity)
         {
-            entities.Add(entity);
-
             EntityAdded?.Invoke(entity);
         }
 
         public void RemoveEntity(Entity entity)
+        {
+            EntityRemoved?.Invoke(entity);
+        }
+
+        internal void OnEntityAdded(Entity entity)
+        {
+            entities.Add(entity);
+        }
+
+        internal void OnEntityRemoved(Entity entity)
         {
             entities.Remove(entity);
         }
