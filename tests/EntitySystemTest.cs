@@ -30,6 +30,32 @@ namespace Savoa
         }
 
         [Fact]
+        public void AddSystemAfterEntity()
+        {
+            Engine engine = new Engine();
+
+            Entity entity1 = new Entity();
+            entity1.AddComponent(new Component1());
+            entity1.AddComponent(new Component2());
+            engine.AddEntity(entity1);
+
+            Entity entity2 = new Entity();
+            entity2.AddComponent(new Component2());
+            entity2.AddComponent(new Component1());
+            engine.AddEntity(entity2);
+
+            EntitySystem es = new IteratingEntitySystem12();
+            engine.AddSystem(es);
+
+            engine.Process();
+
+            Assert.True(entity1.GetComponent<Component1>().Processed);
+            Assert.True(entity1.GetComponent<Component2>().Processed);
+            Assert.True(entity2.GetComponent<Component1>().Processed);
+            Assert.True(entity2.GetComponent<Component2>().Processed);
+        }
+
+        [Fact]
         public void ProcessTwoSystems()
         {
             Engine engine = new Engine();

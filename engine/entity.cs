@@ -7,9 +7,15 @@ namespace Savoa
     {
         private List<object> components = new List<object>();
 
+        public delegate void EntityHandler(Entity entity);
+
+        public event EntityHandler ComponentAdded;
+        public event EntityHandler ComponentRemoved;
+
         public void AddComponent(object component)
         {
             components.Add(component);
+            ComponentAdded?.Invoke(this);
         }
 
         public T GetComponent<T>()

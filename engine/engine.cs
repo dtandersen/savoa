@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Savoa
 {
     public class Engine
     {
-        private EntityManager entityManager;
+        private DefaultEntityManager entityManager;
         private SystemManager systemManager;
         private FamilyManager familyManager;
 
@@ -13,7 +14,9 @@ namespace Savoa
         {
             entityManager = new DefaultEntityManager();
             systemManager = new DefaultSystemManager();
-            familyManager = new DefaultFamilyManager(new EntityBag(entityManager.Entities()));
+            familyManager = new DefaultFamilyManager(new ReadOnlyCollection<Entity>(entityManager.Entities()));
+
+            entityManager.EntityAdded += familyManager.OnEntityAdded;
         }
 
         public void AddEntity(Entity entity)
@@ -44,11 +47,10 @@ namespace Savoa
 
         public void Process()
         {
-            familyManager.Process();
             systemManager.Process();
         }
 
-        public EntityBag EntitiesFor(Family family, params Type[] componentTypes)
+        public ReadOnlyCollection<Entity> EntitiesFor(Family family, params Type[] componentTypes)
         {
             return familyManager.EntitiesFor(family);
         }

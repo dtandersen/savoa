@@ -1,8 +1,10 @@
-﻿namespace Savoa
+﻿using System.Collections.ObjectModel;
+
+namespace Savoa
 {
     public abstract class EntitySystem : System
     {
-        protected EntityBag entities;
+        protected ReadOnlyCollection<Entity> entities;
 
         abstract public void Process();
 

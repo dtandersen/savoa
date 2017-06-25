@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Engine.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="EntityBag.cs" />
     <Compile Include="EntityManager.cs" />
     <Compile Include="EntitySystem.cs" />
     <Compile Include="Family.cs" />

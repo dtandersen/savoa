@@ -4,7 +4,7 @@
     {
         override public void Process()
         {
-            foreach (Entity entity in entities.GetEntities())
+            foreach (Entity entity in entities)
             {
                 processEntity(entity);
             }

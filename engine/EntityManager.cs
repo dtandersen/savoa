@@ -17,9 +17,19 @@ namespace Savoa
     {
         private List<Entity> entities = new List<Entity>();
 
+        public delegate void AddEntityHandler(Entity entity);
+
+        public event AddEntityHandler EntityAdded;
+
+        public DefaultEntityManager()
+        {
+        }
+
         public void AddEntity(Entity entity)
         {
             entities.Add(entity);
+
+            EntityAdded?.Invoke(entity);
         }
 
         public void RemoveEntity(Entity entity)
