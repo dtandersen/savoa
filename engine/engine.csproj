@@ -41,17 +41,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComponentManager.cs" />
-    <Compile Include="Engine.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="EntityManager.cs" />
-    <Compile Include="EntitySystem.cs" />
-    <Compile Include="Family.cs" />
-    <Compile Include="FamilyManager.cs" />
-    <Compile Include="IteratingEntitySystem.cs" />
+    <Compile Include="ComponentManager.cs">
+      <PersistentFileGuid>619a481d-aee2-40b3-8771-af4fc26f1176</PersistentFileGuid>
+    </Compile>
+    <Compile Include="Engine.cs">
+      <PersistentFileGuid>a970fa81-155d-4e24-93fb-24539b33119b</PersistentFileGuid>
+    </Compile>
+    <Compile Include="Entity.cs">
+      <PersistentFileGuid>2986424c-d1c5-4f08-8965-def131bb363b</PersistentFileGuid>
+    </Compile>
+    <Compile Include="EntityManager.cs">
+      <PersistentFileGuid>2546d29d-892a-423d-8a71-d2f0cbaac8d9</PersistentFileGuid>
+    </Compile>
+    <Compile Include="EntitySystem.cs">
+      <PersistentFileGuid>cb14a5f7-fb7e-4f27-a87f-a9dc7753d57c</PersistentFileGuid>
+    </Compile>
+    <Compile Include="Family.cs">
+      <PersistentFileGuid>7c435064-0893-4ac5-991d-b097fd2ca8f6</PersistentFileGuid>
+    </Compile>
+    <Compile Include="FamilyManager.cs">
+      <PersistentFileGuid>7028296b-d314-4665-87ea-12132f1129f5</PersistentFileGuid>
+    </Compile>
+    <Compile Include="IteratingEntitySystem.cs">
+      <PersistentFileGuid>57dd3f15-7f87-4714-b7ba-ae933491424e</PersistentFileGuid>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System.cs" />
-    <Compile Include="SystemManager.cs" />
+    <Compile Include="SystemManager.cs">
+      <PersistentFileGuid>6788d1bf-5a09-40ec-a727-f29cf6fc5d76</PersistentFileGuid>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy C:\Users\David\Documents\unity-test\engine\bin\Debug\* C:\Users\David\Documents\traingame\Assets</PostBuildEvent>
+  </PropertyGroup>
 </Project>
