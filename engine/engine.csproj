@@ -73,6 +73,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy C:\Users\David\Documents\unity-test\engine\bin\Debug\* C:\Users\David\Documents\traingame\Assets</PostBuildEvent>
+    <PostBuildEvent>copy $(SolutionDir)engine\bin\Debug\* $(SolutionDir)..\traingame\Assets</PostBuildEvent>
   </PropertyGroup>
 </Project>
